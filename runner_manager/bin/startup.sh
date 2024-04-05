@@ -54,6 +54,11 @@ function job_started {
 			sleep 5
 		done
 	fi
+
+	echo "Logging into ECR..."
+	aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $(aws sts get-caller-identity | jq -r .Account).dkr.ecr.eu-west-1.amazonaws.com
+	echo "Login successful!"
+
 	echo "Done"
 }
 
