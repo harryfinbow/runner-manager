@@ -58,8 +58,8 @@ function job_started {
 	echo "Logging into ECR..."
 	aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $(aws sts get-caller-identity | jq -r .Account).dkr.ecr.eu-west-1.amazonaws.com
 	echo "Login successful!"
-	mkdir -p /home/actions/symlinked-logs/${GITHUB_REPOSITORY}
-	ln -s /home/actions/actions-runner/_diag /home/actions/symlinked-logs/${GITHUB_REPOSITORY}
+	mkdir -p /home/actions/symlinked-logs/${GITHUB_REPOSITORY}/${GITHUB_RUN_ID}
+	ln -s /home/actions/actions-runner/_diag /home/actions/symlinked-logs/${GITHUB_REPOSITORY}/${GITHUB_RUN_ID}
 	echo "Done"
 }
 
