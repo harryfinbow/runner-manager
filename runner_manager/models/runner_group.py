@@ -42,6 +42,8 @@ class BaseRunnerGroup(PydanticBaseModel):
     runners: Optional[List[int]] = None
     max: Optional[int] = Field(ge=1, default=20)
     min: Optional[int] = Field(ge=0, default=0)
+    os: str = Field(default="linux")
+    arch: str = Field(default="x64")
     labels: List[str]
 
     backend: Annotated[
