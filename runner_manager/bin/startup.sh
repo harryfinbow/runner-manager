@@ -63,10 +63,14 @@ function job_started {
 	ln -s /home/actions/actions-runner/_diag /home/actions/symlinked-logs/${GITHUB_REPOSITORY}/${GITHUB_RUN_ID}/${GITHUB_RUN_ATTEMPT}
 	echo "Symlink successful!"
 	echo "Done"
+	bash /home/exporter-job-status/save_job_status.sh | sponge /var/lib/prometheus/node-exporter/github-job-status.prom
+	cat /var/lib/prometheus/node-exporter/github-job-status.prom
 }
 
 function job_completed {
 	# This function is called when the job is completed
+	bash /home/exporter-job-status/end_job_status.sh | sponge /var/lib/prometheus/node-exporter/github-job-status.prom
+	cat /var/lib/prometheus/node-exporter/github-job-status.prom
 	echo "Job completed"
 
 }
