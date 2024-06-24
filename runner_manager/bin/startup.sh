@@ -54,25 +54,13 @@ function job_started {
 			sleep 5
 		done
 	fi
-
-	echo "Logging into ECR..."
-	aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $(aws sts get-caller-identity | jq -r .Account).dkr.ecr.eu-west-1.amazonaws.com
-	echo "Login successful!"
-	echo "Symlinking /home/actions/actions-runner/_diag to /home/actions/symlinked-logs/${GITHUB_REPOSITORY}/${GITHUB_RUN_ID}/${GITHUB_RUN_ATTEMPT}"
-	mkdir -p /home/actions/symlinked-logs/${GITHUB_REPOSITORY}/${GITHUB_RUN_ID}/${GITHUB_RUN_ATTEMPT}
-	ln -s /home/actions/actions-runner/_diag /home/actions/symlinked-logs/${GITHUB_REPOSITORY}/${GITHUB_RUN_ID}/${GITHUB_RUN_ATTEMPT}
-	echo "Symlink successful!"
-	echo "Done"
-	/home/exporter-job-status/job-started-status.sh | sponge /var/lib/prometheus/node-exporter/github-job-status.prom
-	cat /var/lib/prometheus/node-exporter/github-job-status.prom
+	/home/job-scripts/job-started.sh
 }
 
 function job_completed {
 	# This function is called when the job is completed
-	/home/exporter-job-status/job-completed-status.sh | sponge /var/lib/prometheus/node-exporter/github-job-status.prom
-	cat /var/lib/prometheus/node-exporter/github-job-status.prom
+	/home/job-scripts/job-completed.sh
 	echo "Job completed"
-
 }
 
 function setup_service {
