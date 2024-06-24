@@ -55,6 +55,7 @@ function job_started {
 		done
 	fi
 	/home/job-scripts/job-started.sh
+	echo "Done"
 }
 
 function job_completed {
