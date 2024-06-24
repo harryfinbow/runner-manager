@@ -54,13 +54,13 @@ function job_started {
 			sleep 5
 		done
 	fi
-	/home/job-scripts/job-started.sh
+	/home/runner-manager-addon-scripts/job-started.sh
 	echo "Done"
 }
 
 function job_completed {
 	# This function is called when the job is completed
-	/home/job-scripts/job-completed.sh
+	/home/runner-manager-addon-scripts/job-completed.sh
 	echo "Job completed"
 }
 
