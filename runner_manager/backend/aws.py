@@ -43,6 +43,8 @@ class AWSBackend(BaseBackend):
         """Delete a runner."""
         if runner.instance_id:
             try:
+                log.info(f"Deleting instance {runner.instance_id}.")
+                self.client.describe_instance_status(InstanceIds=[runner.instance_id])
                 self.client.terminate_instances(InstanceIds=[runner.instance_id])
             except ClientError as e:
                 error = e.response.get("Error", {})
